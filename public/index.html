@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>triple-s mini S3</title>
+  <style>
+    body { font-family: monospace; max-width:600px; margin:2em auto; }
+    h2 { margin-top:2em; }
+    .buckets, .objects { margin-top:1em; }
+    .item { margin:0.5em 0; }
+    button {margin-left:1em;}
+    #uploadForm { margin-top:1em; }
+  </style>
+</head>
+<body>
+  <h1>triple-s: S3-макет</h1>
+  <div>
+    <h2>Бакеты</h2>
+    <div>
+      <input id="bucketName" placeholder="имя бакета" size="18">
+      <button onclick="createBucket()">Создать</button>
+    </div>
+    <div class="buckets" id="buckets"></div>
+  </div>
+  <hr/>
+  <div id="bucketPanel" style="display:none;">
+    <h2>Объекты в <span id="bname"></span></h2>
+    <form id="uploadForm">
+      <input type="file" id="fileInput">
+      <button type="submit">Загрузить</button>
+    </form>
+    <div class="objects" id="objects"></div>
+    <button onclick="backToBuckets()">Назад</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

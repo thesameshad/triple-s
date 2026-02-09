@@ -1,0 +1,1 @@
+hello curl -X PUT --data-binary @test.txt http://localhost:8080/mybucket/test.txt

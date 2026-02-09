@@ -16,6 +16,6 @@ func main() {
 		log.Fatalf("Братья, у нас проблемы тут с %v", err)
 		return
 	}
-
+	server.SetDir(*dir)
 	log.Fatal(server.StartServer(*port))
 }

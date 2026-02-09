@@ -9,7 +9,9 @@ import (
 func Routes() *http.ServeMux {
 	fmt.Println("-------------------Server Started--------------------")
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", handlers.Root)
+	fs := http.FileServer(http.Dir("public"))
+	mux.Handle("/ui/", http.StripPrefix("/ui/", fs))
 	mux.HandleFunc("/health", handlers.Health)
+	mux.HandleFunc("/", handlers.Root)
 	return mux
 }

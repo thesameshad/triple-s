@@ -3,29 +3,79 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>triple-s mini S3</title>
+  <title>triple-s 🦍 S3</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=JetBrains+Mono:wght@400&display=swap"
+    rel="stylesheet">
   <style>
     body {
-      background: #f8fbfd;
-      color: #222;
+      background: linear-gradient(135deg, #f8fbfd 60%, #ffeacf 100%);
+      color: #1c222d;
       font-family: 'JetBrains Mono', 'Fira Mono', monospace;
-      max-width: 650px;
-      margin: 2em auto;
-      padding: 2em;
-      border-radius: 16px;
-      box-shadow: 0 4px 24px #c0d6ee55;
+      max-width: 680px;
+      margin: 3em auto 2em auto;
+      padding: 2.5em 1.5em 2em 1.5em;
+      border-radius: 18px;
+      box-shadow: 0 6px 38px #a6b8ff1a, 0 2px 6px #8881;
+      transition: .2s;
+      border: 2px solid #2a4569;
     }
 
     h1 {
       letter-spacing: 2px;
-      margin-bottom: 0.2em;
+      margin-bottom: 0.4em;
       cursor: pointer;
-      color: #2274A5;
+      color: #22408a;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2em;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+
+    .gorilla {
+      font-size: 2em;
+      user-select: none;
+      margin-right: 0.1em;
+      transition: transform .2s;
+      will-change: transform;
+      animation: bounce 2s infinite cubic-bezier(.53, .17, .85, .67);
+    }
+
+    @keyframes bounce {
+      0% {
+        transform: scale(1);
+      }
+
+      15% {
+        transform: scale(1.16)
+      }
+
+      20% {
+        transform: rotate(-9deg) scale(1.11);
+      }
+
+      23% {
+        transform: rotate(0) scale(1.33);
+      }
+
+      30% {
+        transform: rotate(6deg) scale(1.14);
+      }
+
+      36% {
+        transform: scale(1);
+      }
+
+      100% {
+        transform: scale(1);
+      }
     }
 
     h2 {
-      color: #444;
+      color: #30313c;
+      margin: 1.5em 0 1em 0;
+      font-family: 'Montserrat', sans-serif;
     }
 
     .buckets,
@@ -37,35 +87,50 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.6em 1em;
+      padding: 0.62em 1.08em;
       border-radius: 6px;
       transition: .17s;
-      background: #fff;
-      margin-bottom: 0.6em;
-      box-shadow: 0 1px 6px #dbeafe11;
+      background: #fffdfa;
+      margin-bottom: 0.7em;
+      box-shadow: 0 2px 8px #c2dcfb29;
+      font-size: 1.05em;
     }
 
     .item:hover {
-      background: #e6f1fc;
+      background: #ffeacf;
+      transform: scale(1.011);
     }
 
     button {
-      background: #2274A5;
-      color: white;
+      background: #3c60ed;
+      color: #fff;
       border: none;
-      border-radius: 5px;
-      padding: 0.35em 1.1em;
-      margin-left: 14px;
+      border-radius: 6px;
+      padding: 0.33em 1.1em;
+      margin-left: 12px;
       font-family: inherit;
       font-weight: bold;
       letter-spacing: 1px;
       cursor: pointer;
-      box-shadow: 0 1px 5px #8ecae655;
+      font-size: 1em;
+      box-shadow: 0 1px 6px #8ecae699;
       transition: .13s;
+      outline: none;
     }
 
     button:hover {
-      background: #185c86;
+      background: #3c4dad;
+      scale: 1.05;
+      color: #ffc94d;
+    }
+
+    button.danger {
+      background: #e74c3c;
+    }
+
+    button.danger:hover {
+      background: #93221a;
+      color: #fff;
     }
 
     #uploadForm {
@@ -77,8 +142,8 @@
       border-spacing: 0;
       margin-top: 1em;
       background: white;
-      border-radius: 6px;
-      box-shadow: 0 2px 9px #cde7fa11;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px #9ecaed11;
       overflow: hidden;
     }
 
@@ -86,86 +151,97 @@
     .table td {
       padding: 0.5em 1em;
       text-align: left;
+      font-size: 1em;
     }
 
     .table th {
-      background: #e5f2fb;
-      color: #1a3b5d;
-      font-weight: bold;
+      background: #e5f2fa;
+      color: #193063;
+      font-weight: 700;
+      letter-spacing: 1px;
     }
 
     .empty {
-      color: #aaa;
+      color: #9ea6b0;
       margin: 2em 0;
-      padding-left: 1em;
+      padding-left: 2.3em;
+      font-size: 1.1em;
     }
 
     .loading {
       font-style: italic;
-      color: #2274A5;
+      color: #5485ff;
     }
 
     .back {
       cursor: pointer;
-      color: #2274A5;
+      color: #3366aa;
       font-weight: bold;
       text-decoration: underline;
       border: none;
       background: none;
       margin: 0 0 2em 0;
       padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: 1px;
     }
 
     .error {
       color: #e74c3c;
-      margin: 1em 0 0.7em 0;
+      margin: 1em 0 1em 0;
+      font-weight: bold;
     }
 
     .success {
-      color: #2ccc4c;
+      color: #13bb52;
       margin: 1em 0;
+      font-weight: bold;
     }
 
     @media(max-width:570px) {
       body {
-        padding: 0.2em;
+        padding: 0.4em;
         max-width: 99vw;
+      }
+
+      h1 {
+        font-size: 1.13em;
       }
 
       .table th,
       .table td {
-        padding: 0.58em 0.3em;
+        padding: 0.58em 0.25em;
       }
     }
   </style>
 </head>
 
 <body>
-  <h1 onclick="loadBuckets();">triple-s: S3-макет</h1>
+  <h1 onclick="loadBuckets();">
+    <span class="gorilla">🦍</span>
+    triple-s <span style="font-size:0.8em;">для крутых вообще</span>
+    <span style="margin-left:auto">🐒 🐻 🦍 😂 🤌🏻</span>
+  </h1>
   <div id="bucketsPanel">
-    <h2>Бакеты</h2>
-    <div>
-      <input id="bucketName" placeholder="имя бакета" size="17" style="font-size:1em;">
-      <button onclick="createBucket()">Создать</button>
-    </div>
-    <div class="buckets" id="buckets"></div>
-    <div id="emptyBuckets" class="empty" style="display:none">Нет бакетов. Создайте новый.</div>
-    <div id="bucketsLoading" class="loading" style="display:none">Загрузка...</div>
+    <h2>🌴 Бакеты</h2>
+    <input id="bucketName" placeholder="имя бакета"
+      style="font-size:1.1em; border-radius:7px; border:1.5px solid #adcbee; padding:0.4em 1.2em;">
+    <button onclick="createBucket()">Создать 🦍</button>
+    <div id="buckets"></div>
+    <div id="emptyBuckets" class="empty" style="display:none">Нет бакетов, но будет — время создавать! 🤌🏻</div>
     <div id="bucketError" class="error" style="display:none"></div>
   </div>
   <div id="bucketPanel" style="display:none;">
-    <button class="back" onclick="backToBuckets()">← Назад к бакетам</button>
-    <h2>Объекты в <span id="bname"></span></h2>
+    <button class="back" onclick="backToBuckets()">👈 Вернуться к бакетам</button>
+    <h2>📂 Объекты в <span id="bname"></span></h2>
     <form id="uploadForm">
-      <input type="file" id="fileInput">
-      <button type="submit">Загрузить</button>
+      <input type="file" id="fileInput" style="font-size:1em;">
+      <button type="submit">Загрузить 🐻</button>
     </form>
-    <div class="objects" id="objects"></div>
-    <div id="emptyObjects" class="empty" style="display:none;">Нет объектов в бакете.</div>
-    <div id="objectsLoading" class="loading" style="display:none;">Загрузка...</div>
+    <div id="objects"></div>
+    <div id="emptyObjects" class="empty" style="display:none;">Нет объектов — но можно залить мемы! 😂</div>
     <div id="objError" class="error" style="display:none;"></div>
   </div>
-
   <script src="app.js"></script>
 </body>
 

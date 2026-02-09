@@ -33,6 +33,9 @@ func Root(w http.ResponseWriter, r *http.Request) {
 		} else if r.Method == http.MethodDelete {
 			deleteBucket(w, bucketName)
 			return
+		} else if r.Method == http.MethodGet {
+			listObjectsXML(w, bucketName)
+			return
 		}
 	}
 	if len(parts) == 2 {
@@ -63,6 +66,29 @@ func listBuckets(w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "application/xml")
 	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write(xmlBytes)
+}
+
+func listObjectsXML(w http.ResponseWriter, bucket string) {
+	bks, err := buckets.LoadBuckets(dataDir)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("<Error>InternalError</Error>"))
+		return
+	}
+	_, bk := buckets.FindBucket(bks, bucket)
+	if bk.Name == "" {
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte("<Error>NoSuchBucket</Error>"))
+		return
+	}
+	objs, err := objects.LoadObjects(dataDir, bucket)
+	if err != nil {
+		objs = []objects.Object{}
+	}
+	xmlBytes, _ := objects.ObjectsToXML(objs)
+	w.Header().Set("Content-Type", "application/xml")
+	w.WriteHeader(http.StatusOK)
+	w.Write(xmlBytes)
 }
 
 func createBucket(w http.ResponseWriter, name string) {

@@ -11,16 +11,16 @@ import (
 )
 
 type Object struct {
-	Key         string
-	Size        int64
-	ContentType string
+	Key          string
+	Size         int64
+	ContentType  string
 	LastModified string
 }
 
 var (
-	objectKeyRe = regexp.MustCompile(`^[a-zA-Z0-9!_\-\.]\S{0,255}$`)
-	ErrKeyInvalid   = errors.New("Invalid object key")
-	ErrNotFound     = errors.New("Object not found")
+	objectKeyRe   = regexp.MustCompile(`^[a-zA-Z0-9!_\-\.]\S{0,255}$`)
+	ErrKeyInvalid = errors.New("Invalid object key")
+	ErrNotFound   = errors.New("Object not found")
 )
 
 func isValidObjectKey(key string) bool {
@@ -55,9 +55,9 @@ func LoadObjects(dataDir, bucket string) ([]Object, error) {
 		}
 		sz, _ := strconv.ParseInt(rec[1], 10, 64)
 		objs = append(objs, Object{
-			Key: rec[0],
-			Size: sz,
-			ContentType: rec[2],
+			Key:          rec[0],
+			Size:         sz,
+			ContentType:  rec[2],
 			LastModified: rec[3],
 		})
 	}
@@ -108,9 +108,9 @@ func SaveFile(dataDir, bucket, key string, data []byte, contentType string) (Obj
 	}
 	now := time.Now().Format(time.RFC3339)
 	obj := Object{
-		Key: key,
-		Size: stat.Size(),
-		ContentType: contentType,
+		Key:          key,
+		Size:         stat.Size(),
+		ContentType:  contentType,
 		LastModified: now,
 	}
 	idx, _ := FindObject(objs, key)

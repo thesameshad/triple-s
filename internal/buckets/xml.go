@@ -5,7 +5,7 @@ import (
 )
 
 type ListAllMyBucketsResult struct {
-	XMLName xml.Name `xml:"ListAllMyBucketsResult"`
+	XMLName xml.Name    `xml:"ListAllMyBucketsResult"`
 	Buckets BucketsElem `xml:"Buckets"`
 }
 
@@ -28,7 +28,7 @@ func BucketsToXML(buckets []Bucket) ([]byte, error) {
 			continue
 		}
 		lst.Buckets.Bucket = append(lst.Buckets.Bucket, BucketElem{
-			Name: b.Name,
+			Name:         b.Name,
 			CreationDate: b.CreationTime,
 			LastModified: b.LastModified,
 		})

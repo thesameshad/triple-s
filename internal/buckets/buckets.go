@@ -10,14 +10,14 @@ import (
 )
 
 type Bucket struct {
-	Name            string
-	CreationTime    string
-	LastModified    string
-	Status          string
+	Name         string
+	CreationTime string
+	LastModified string
+	Status       string
 }
 
 var (
-	bucketNameRegexp = regexp.MustCompile(`^[a-z0-9][a-z0-9-.]{1,61}[a-z0-9]$`)
+	bucketNameRegexp     = regexp.MustCompile(`^[a-z0-9][a-z0-9-.]{1,61}[a-z0-9]$`)
 	ErrBucketExists      = errors.New("Bucket already exists")
 	ErrBucketNotFound    = errors.New("Bucket not found")
 	ErrInvalidBucketName = errors.New("Invalid bucket name")
@@ -106,10 +106,10 @@ func CreateBucket(dataDir, name string) (Bucket, error) {
 	}
 	now := time.Now().Format(time.RFC3339)
 	bucket := Bucket{
-		Name: name,
+		Name:         name,
 		CreationTime: now,
 		LastModified: now,
-		Status: "active",
+		Status:       "active",
 	}
 	buckets = append(buckets, bucket)
 	if err := SaveBuckets(dataDir, buckets); err != nil {

@@ -1,40 +1,172 @@
 <!DOCTYPE html>
-
-
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>triple-s mini S3</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { font-family: monospace; max-width:600px; margin:2em auto; }
-    h2 { margin-top:2em; }
-    .buckets, .objects { margin-top:1em; }
-    .item { margin:0.5em 0; }
-    button {margin-left:1em;}
-    #uploadForm { margin-top:1em; }
+    body {
+      background: #f8fbfd;
+      color: #222;
+      font-family: 'JetBrains Mono', 'Fira Mono', monospace;
+      max-width: 650px;
+      margin: 2em auto;
+      padding: 2em;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px #c0d6ee55;
+    }
+
+    h1 {
+      letter-spacing: 2px;
+      margin-bottom: 0.2em;
+      cursor: pointer;
+      color: #2274A5;
+    }
+
+    h2 {
+      color: #444;
+    }
+
+    .buckets,
+    .objects {
+      margin-top: 1.2em;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6em 1em;
+      border-radius: 6px;
+      transition: .17s;
+      background: #fff;
+      margin-bottom: 0.6em;
+      box-shadow: 0 1px 6px #dbeafe11;
+    }
+
+    .item:hover {
+      background: #e6f1fc;
+    }
+
+    button {
+      background: #2274A5;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 0.35em 1.1em;
+      margin-left: 14px;
+      font-family: inherit;
+      font-weight: bold;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 1px 5px #8ecae655;
+      transition: .13s;
+    }
+
+    button:hover {
+      background: #185c86;
+    }
+
+    #uploadForm {
+      margin-top: 1em;
+    }
+
+    .table {
+      width: 100%;
+      border-spacing: 0;
+      margin-top: 1em;
+      background: white;
+      border-radius: 6px;
+      box-shadow: 0 2px 9px #cde7fa11;
+      overflow: hidden;
+    }
+
+    .table th,
+    .table td {
+      padding: 0.5em 1em;
+      text-align: left;
+    }
+
+    .table th {
+      background: #e5f2fb;
+      color: #1a3b5d;
+      font-weight: bold;
+    }
+
+    .empty {
+      color: #aaa;
+      margin: 2em 0;
+      padding-left: 1em;
+    }
+
+    .loading {
+      font-style: italic;
+      color: #2274A5;
+    }
+
+    .back {
+      cursor: pointer;
+      color: #2274A5;
+      font-weight: bold;
+      text-decoration: underline;
+      border: none;
+      background: none;
+      margin: 0 0 2em 0;
+      padding: 0;
+    }
+
+    .error {
+      color: #e74c3c;
+      margin: 1em 0 0.7em 0;
+    }
+
+    .success {
+      color: #2ccc4c;
+      margin: 1em 0;
+    }
+
+    @media(max-width:570px) {
+      body {
+        padding: 0.2em;
+        max-width: 99vw;
+      }
+
+      .table th,
+      .table td {
+        padding: 0.58em 0.3em;
+      }
+    }
   </style>
 </head>
+
 <body>
-  <h1>triple-s: S3-макет</h1>
-  <div>
+  <h1 onclick="loadBuckets();">triple-s: S3-макет</h1>
+  <div id="bucketsPanel">
     <h2>Бакеты</h2>
     <div>
-      <input id="bucketName" placeholder="имя бакета" size="18">
+      <input id="bucketName" placeholder="имя бакета" size="17" style="font-size:1em;">
       <button onclick="createBucket()">Создать</button>
     </div>
     <div class="buckets" id="buckets"></div>
+    <div id="emptyBuckets" class="empty" style="display:none">Нет бакетов. Создайте новый.</div>
+    <div id="bucketsLoading" class="loading" style="display:none">Загрузка...</div>
+    <div id="bucketError" class="error" style="display:none"></div>
   </div>
-  <hr/>
   <div id="bucketPanel" style="display:none;">
+    <button class="back" onclick="backToBuckets()">← Назад к бакетам</button>
     <h2>Объекты в <span id="bname"></span></h2>
     <form id="uploadForm">
       <input type="file" id="fileInput">
       <button type="submit">Загрузить</button>
     </form>
     <div class="objects" id="objects"></div>
-    <button onclick="backToBuckets()">Назад</button>
+    <div id="emptyObjects" class="empty" style="display:none;">Нет объектов в бакете.</div>
+    <div id="objectsLoading" class="loading" style="display:none;">Загрузка...</div>
+    <div id="objError" class="error" style="display:none;"></div>
   </div>
 
   <script src="app.js"></script>
 </body>
+
 </html>
